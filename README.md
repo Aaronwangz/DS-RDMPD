@@ -25,4 +25,4 @@ Our project is based on **[RDDM](https://github.com/nachifur/RDDM)**, and we are
 
 ---
 
-Stay tuned for the full release including training/inference code and detailed documentation. For any questions, feel free to reach out or open an issue.
+Stay tuned for the full release, including training/inference code and detailed documentation. If you have any questions, please feel free to contact us at 3089777698qq.com
