@@ -14,7 +14,7 @@ Extensive experiments on multiple datasets show that DS-RDMPD can achieve satisf
 
 ### 1.🚀 Getting Started
 
-We train and test the code on **PyTorch 1.13.0 + CUDA 11.7**.
+We train and test the code on **PyTorch 1.13.0 + CUDA 11.7**. The detailed configuration is mentioned in the paper.
 
 ### 2.Create a new conda environment
 <pre lang="markdown"> 
