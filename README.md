@@ -1,8 +1,22 @@
-# DS-RDMPD
+# A Dual-Stage Residual Diffusion Model with Perceptual Decoding for Remote Sensing Image Dehazing
 
-**A Dual-Stage Residual Diffusion Model with Perceptual Decoding for Remote Sensing Image Dehazing**
+abstract:Atmospheric pollutants, such as haze, severely affect the quality of remote sensing images, leading to blurred details and impairing their effectiveness in applications like environmental monitoring and agricultural resource management. In recent years, diffusion models have attracted widespread attention due to their powerful generative capabilities. \textcolor{red}{However, striking a balance between their expensive training costs and actual recovery effectiveness has become a major challenge. To address this key challenge, we propose a perceptual decoding dual-stage residual diffusion model (DS-RDMPD) for remote sensing image dehazing. The core innovation of our work lies in a dual-stage coarse-to-fine architecture that integrates the traditional UNet with a diffusion model, enabling efficient adaptation of diffusion-based restoration to the dehazing task. This design not only achieves strong performance but also demonstrates remarkable generalization across various image restoration scenarios.}
+In the first stage, we use Multi-channel Efficient Selective Synthesis UNet (MCESS-UNet) to pre-process the remote sensing haze images. This architecture performs initial dehazing and feature extraction through a multi-scale channel attention (MC) block, and then performs enhanced spatial feature aggregation through an Efficient Selective Synthesis (ESS) block. The preprocessed image is then used as the conditional input of the Residual Diffusion Model with Perceptual Decoding, where the perceptual decoder improves the generation quality by further decoupling the condition to refine the residual estimate.
+Extensive experiments on multiple datasets show that DS-RDMPD can achieve satisfactory results with only 300,000 iterations and about five sampling steps. It has achieved satisfactory results in both qualitative and quantitative experiments, and also performs well in rain removal and deblurring tasks, demonstrating the excellent generalization ability of the model.
 
-We present DS-RDMPD — a Dual-Stage Residual Diffusion Model with Perceptual Decoding for remote sensing image dehazing. DS-RDMPD features a coarse-to-fine dual-stage architecture that efficiently combines the strengths of a traditional UNet and a diffusion model. In the first stage, we introduce a Multi-channel Efficient Selective Synthesis UNet (MCESS-UNet) that performs initial dehazing and feature extraction using a multi-scale channel attention (MC) block and an Efficient Selective Synthesis (ESS) block. The output is then fed into a Residual Diffusion Model with Perceptual Decoding, which leverages a perceptual decoder to refine residual estimation and improve generative quality. Our method significantly reduces the computational cost typically associated with diffusion models, achieving high-quality restoration with only 300K training iterations and ~5 sampling steps. In addition to dehazing, DS-RDMPD also shows promising generalization in related tasks such as deraining and deblurring.
+## 🧠 Network Architecture
+
+![Network Architecture]()
+
+## 🚀 Getting Started
+
+We test the code on PyTorch 1.13.0 + CUDA 11.7.
+
+
+### 1. Create a new conda environment
+```bash
+conda create -n DSRDMPD python=3.8
+conda activate DSRDMPD
 
 > ⚠️ The current open source code is less readable, but it can be trained and tested. You only need to modify the path. Note: modify the key image size parameters. We are currently accelerating the compilation of a more readable version.
 
