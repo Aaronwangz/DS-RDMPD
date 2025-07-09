@@ -10,12 +10,13 @@ Extensive experiments on multiple datasets show that DS-RDMPD can achieve satisf
 
 ---
 
-### 1.🚀 Getting Started
+### 🚀 Getting Started
 
-We test the code on **PyTorch 1.13.0 + CUDA 11.7**.
+We test the code on **PyTorch 1.13.0** + **CUDA 11.7**.
 
-### 2.Create a new conda environment
+### 1️⃣ Create a Conda Environment
 
+```bash
 conda create -n DSRDMPD python=3.8
 conda activate DSRDMPD
 
