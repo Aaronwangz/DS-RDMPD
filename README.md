@@ -4,19 +4,20 @@ abstract:Atmospheric pollutants, such as haze, severely affect the quality of re
 In the first stage, we use Multi-channel Efficient Selective Synthesis UNet (MCESS-UNet) to pre-process the remote sensing haze images. This architecture performs initial dehazing and feature extraction through a multi-scale channel attention (MC) block, and then performs enhanced spatial feature aggregation through an Efficient Selective Synthesis (ESS) block. The preprocessed image is then used as the conditional input of the Residual Diffusion Model with Perceptual Decoding, where the perceptual decoder improves the generation quality by further decoupling the condition to refine the residual estimate.
 Extensive experiments on multiple datasets show that DS-RDMPD can achieve satisfactory results with only 300,000 iterations and about five sampling steps. It has achieved satisfactory results in both qualitative and quantitative experiments, and also performs well in rain removal and deblurring tasks, demonstrating the excellent generalization ability of the model.
 
+优化一下。
+
 ## 🧠 Network Architecture
 
 ![Network Architecture](images/network_architecture.png)
 
 ---
 
-### 🚀 Getting Started
+### 1.🚀 Getting Started
 
-We test the code on **PyTorch 1.13.0** + **CUDA 11.7**.
+We test the code on **PyTorch 1.13.0 + CUDA 11.7**.
 
-### 1️⃣ Create a Conda Environment
+### 2.Create a new conda environment
 
-```bash
 conda create -n DSRDMPD python=3.8
 conda activate DSRDMPD
 
