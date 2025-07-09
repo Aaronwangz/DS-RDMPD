@@ -10,17 +10,17 @@ Extensive experiments on multiple datasets show that DS-RDMPD can achieve satisf
 
 ---
 
-## 🚀 Getting Started
+### 🚀 Getting Started
 
 We test the code on **PyTorch 1.13.0 + CUDA 11.7**.
 
-### 1. Create a new conda environment
+### Create a new conda environment
 
-```bash
 conda create -n DSRDMPD python=3.8
 conda activate DSRDMPD
----
-## ⚠️notice
+
+
+###  ⚠️notice
 The current open source code is less readable, but it can be trained and tested. You only need to modify the path. Note: modify the key image size parameters. We are currently accelerating the compilation of a more readable version.
 
 ## 📦 Available Resources
