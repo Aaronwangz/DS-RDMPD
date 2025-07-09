@@ -7,7 +7,7 @@ Extensive experiments on multiple datasets show that DS-RDMPD can achieve satisf
 
 ## 🧠 Network Architecture
 
-![Network Architecture](images/network_architecture.png)
+![Network Architecture](images/1.png)
 
 ---
 
