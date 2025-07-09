@@ -6,14 +6,16 @@ Extensive experiments on multiple datasets show that DS-RDMPD can achieve satisf
 
 ## 🧠 Network Architecture
 
-![Network Architecture]()
+![Network Architecture](images/network_architecture.png)
+
+---
 
 ## 🚀 Getting Started
 
-We test the code on PyTorch 1.13.0 + CUDA 11.7.
+We test the code on **PyTorch 1.13.0 + CUDA 11.7**.
 
+### 1. Create a new conda environment
 
-## 1. Create a new conda environment
 ```bash
 conda create -n DSRDMPD python=3.8
 conda activate DSRDMPD
