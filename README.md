@@ -38,8 +38,8 @@ While the code is being finalized, you can access the following components:
 
 ## 5.🙏 Acknowledgment
 
-Our project is based on **[RDDM](https://github.com/nachifur/RDDM)**, and we are very grateful for this excellent work. Their contributions laid the foundation for our advancements in diffusion-based remote sensing image restoration.
+This work is currently under second peer review in the TGRS journal. Our project is based on **[RDDM](https://github.com/nachifur/RDDM)**, and we are very grateful for this excellent work. Their contributions laid the foundation for our advancements in diffusion-based remote sensing image restoration.
 
 ---
 
-Stay tuned for the full release, including training/inference code and detailed documentation. If you have any questions, please feel free to contact us at 3089777698qq.com
+Stay tuned for the full release, including training/inference code and detailed documentation. If you have any questions, please feel free to contact us at aaron@ahut.edu.cn
