@@ -17,8 +17,8 @@ We train and test the code on **PyTorch 1.13.0 + CUDA 11.7**. The detailed confi
 
 ### 2.Create a new conda environment
 <pre lang="markdown"> 
-bash conda create -n DSRDMPD 
-python=3.8 conda activate DSRDMPD  </pre>
+conda create -n DSRDMPD python=3.8 
+conda activate DSRDMPD  </pre>
 
 ###  3.⚠️notice
 The current open source code is less readable, but it can be trained and tested. You only need to modify the path. Note: modify the key image size parameters. We are currently accelerating the compilation of a more readable version.
