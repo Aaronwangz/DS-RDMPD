@@ -5,25 +5,25 @@ In the first stage, we use Multi-channel Efficient Selective Synthesis UNet (MCE
 Extensive experiments on multiple datasets show that DS-RDMPD can achieve satisfactory results with only 300,000 iterations and about five sampling steps. It has achieved satisfactory results in both qualitative and quantitative experiments, and also performs well in rain removal and deblurring tasks, demonstrating the excellent generalization ability of the model.
 
 
-## 🧠 Network Architecture
+## 🧠 Network Architecture 🧠
 
 ![Network Architecture](images/1.png)
 
 ---
 
-### 1.🚀 Getting Started
+### 🚀 Getting Started 🚀
 
 We train and test the code on **PyTorch 1.13.0 + CUDA 11.7**. The detailed configuration is mentioned in the paper.
 
-### 2.Create a new conda environment
+### Create a new conda environment
 <pre lang="markdown"> 
 conda create -n DSRDMPD python=3.8 
 conda activate DSRDMPD  </pre>
 
-###  3.⚠️notice
-The current open source code is less readable, but it can be trained and tested. You only need to modify the path. Note: modify the key image size parameters. We are currently accelerating the compilation of a more readable version.
+###  ⚠️ notice ⚠️
+This work is currently under second peer review in the TGRS journal. The current open source code is less readable, but it can be trained and tested. You only need to modify the path. Note: modify the key image size parameters. We are currently accelerating the compilation of a more readable version.
 
-## 4.📦 Available Resources
+## 📦 Available Resources 📦 
 
 While the code is being finalized, you can access the following components:
 
@@ -36,9 +36,9 @@ While the code is being finalized, you can access the following components:
 - 🔹 **RSID dataset (used for training and evaluation)**  
   [📥 Download](https://drive.google.com/drive/folders/1abSw9GWyyOJINWCRNHBUoJBBw3FCttaS?usp=drive_link)
 
-## 5.🙏 Acknowledgment
+## 🙏 Acknowledgment 🙏
 
-This work is currently under second peer review in the TGRS journal. Our project is based on **[RDDM](https://github.com/nachifur/RDDM)**, and we are very grateful for this excellent work. Their contributions laid the foundation for our advancements in diffusion-based remote sensing image restoration.
+Our project is based on **[RDDM](https://github.com/nachifur/RDDM)**, and we are very grateful for this excellent work. Their contributions laid the foundation for our advancements in diffusion-based remote sensing image restoration.
 
 ---
 
