@@ -15,7 +15,7 @@ We combined the traditional UNet model with the diffusion model to propose a two
 
 ![Network Architecture](images/1.png)
 
-![Network Architecture](images/thin.png)![Network Architecture](images/moderate.png)![Network Architecture](images/thick.png)![Network Architecture](images/rain.png)![Network Architecture](images/blur.png)
+![Network Architecture](images/thin.jpg)![Network Architecture](images/moderate.jpg)![Network Architecture](images/thick.jpg)![Network Architecture](images/rain.jpg)![Network Architecture](images/blur.jpg)
 
 ---
 
@@ -66,4 +66,4 @@ If you find our work helpful in your research, please consider citing it. We app
 Our project is based on **[RDDM](https://github.com/nachifur/RDDM)**, and we are very grateful for this excellent work. Their contributions laid the foundation for our advancements in diffusion-based remote sensing image restoration.
 
 ---
-Stay tuned for the full release, including training/inference code and detailed documentation. If you have any questions, please feel free to contact us at aaron@ahut.edu.cn
+If you have any questions, please feel free to contact us at aaron@ahut.edu.cn
