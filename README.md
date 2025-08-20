@@ -42,10 +42,6 @@ While the code is being finalized, you can access the following components:
 - 🔹 **RSID dataset (used for training and evaluation)**  
   [📥 Download](https://drive.google.com/drive/folders/1abSw9GWyyOJINWCRNHBUoJBBw3FCttaS?usp=drive_link)
 
-## 🙏 Acknowledgment 🙏
-
-Our project is based on **[RDDM](https://github.com/nachifur/RDDM)**, and we are very grateful for this excellent work. Their contributions laid the foundation for our advancements in diffusion-based remote sensing image restoration.
-
 ---
 ## 📖 Citation
 If you find our work helpful in your research, please consider citing it. We appreciate your support！😊
@@ -62,7 +58,10 @@ If you find our work helpful in your research, please consider citing it. We app
   doi={10.1109/TGRS.2025.3600540}
   }
   </pre>
+---
+## 🙏 Acknowledgment 🙏
+
+Our project is based on **[RDDM](https://github.com/nachifur/RDDM)**, and we are very grateful for this excellent work. Their contributions laid the foundation for our advancements in diffusion-based remote sensing image restoration.
 
 ---
-
 Stay tuned for the full release, including training/inference code and detailed documentation. If you have any questions, please feel free to contact us at aaron@ahut.edu.cn
