@@ -5,7 +5,7 @@ This is the official PyTorch implementation of the paper:
 > **A Dual-Stage Residual Diffusion Model with Perceptual Decoding for Remote Sensing Image Dehazing**  
 > Hao Zhou, Yalun Wang, Qian Zhang, Tao Tao, and Wenqi Ren  
 > *IEEE Transactions on Geoscience and Remote Sensing*, 2025  
-> [MDPI Link](https://ieeexplore.ieee.org/document/11130517)
+> [Paper Link](https://ieeexplore.ieee.org/document/11130517)
 
 We combined the traditional UNet model with the diffusion model to propose a two-stage network architecture, DS-RDMPD. This model achieved satisfactory results in remote sensing dehazing, real-world raindrop removal, and real-world denoising, demonstrating strong generalization capabilities. The paper can be found in the link above.
 
