@@ -11,7 +11,7 @@ We combined the traditional UNet model with the diffusion model to propose a two
 
 ---
 
-## 🧠 Network Architecture 🧠
+## 🧠 Network Architecture
 
 ![Network Architecture](images/1.png)
 
@@ -19,7 +19,7 @@ We combined the traditional UNet model with the diffusion model to propose a two
 
 ---
 
-### 🚀 Getting Started 🚀
+### 🚀 Getting Started
 
 We train and test the code on **PyTorch 1.13.0 + CUDA 11.7**. The detailed configuration is mentioned in the paper.
 
@@ -27,10 +27,10 @@ We train and test the code on **PyTorch 1.13.0 + CUDA 11.7**. The detailed confi
 <pre lang="markdown">conda create -n DSRDMPD python=3.8 
 conda activate DSRDMPD  </pre>
 
-###  ⚠️ notice ⚠️
+###  ⚠️ notice
 Remember to modify the path to the dataset before running the test and training code. Different image resolutions require modifying the relevant parameter parameters.
 
-## 📦 Available Resources 📦 
+## 📦 Available Resources
 
 While the code is being finalized, you can access the following components:
 
@@ -60,7 +60,7 @@ If you find our work helpful in your research, please consider citing it. We app
   }
   </pre>
 ---
-## 🙏 Acknowledgment 🙏
+## 🙏 Acknowledgment 
 
 Our project is based on **[RDDM](https://github.com/nachifur/RDDM)**, and we are very grateful for this excellent work. Their contributions laid the foundation for our advancements in diffusion-based remote sensing image restoration.
 
