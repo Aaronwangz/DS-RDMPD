@@ -2,7 +2,7 @@
 
 This is the official PyTorch implementation of the paper:
 
-> **ScaleViM-PDD: Multi-Scale EfficientViM with Physical Decoupling and Dual-Domain Fusion for Remote Sensing Image Dehazing**  
+> **A Dual-Stage Residual Diffusion Model with Perceptual Decoding for Remote Sensing Image Dehazing**  
 > Hao Zhou, Yalun Wang, Qian Zhang, Tao Tao, and Wenqi Ren  
 > *IEEE Transactions on Geoscience and Remote Sensing*, 2025  
 > [MDPI Link](https://ieeexplore.ieee.org/document/11130517)
