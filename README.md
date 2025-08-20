@@ -50,8 +50,7 @@ While the code is being finalized, you can access the following components:
 ---
 ## 📖 Citation
 If you find our work helpful in your research, please consider citing it. We appreciate your support！😊
-<pre lang="markdown"> 
-@ARTICLE{11130517,
+<pre lang="markdown"> @ARTICLE{11130517,
   author={Zhou, Hao and Wang, Yalun and Zhang, Qian and Tao, Tao and Ren, Wenqi},
   journal={IEEE Transactions on Geoscience and Remote Sensing}, 
   title={A Dual-Stage Residual Diffusion Model with Perceptual Decoding for Remote Sensing Image Dehazing}, 
@@ -61,8 +60,7 @@ If you find our work helpful in your research, please consider citing it. We app
   pages={1-1},
   keywords={Remote Sensing Image Dehazing;Diffusion Model;Computer Vision;Multi-Scale Channel Attention},
   doi={10.1109/TGRS.2025.3600540}
-  }
-  </pre>
+  }</pre>
 ---
 ## 🙏 Acknowledgment 
 
