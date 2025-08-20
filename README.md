@@ -1,4 +1,4 @@
-# 🌫️【TGRS 2025】A Dual-Stage Residual Diffusion Model with Perceptual Decoding for Remote Sensing Image Dehazing
+# 【TGRS 2025】A Dual-Stage Residual Diffusion Model with Perceptual Decoding for Remote Sensing Image Dehazing
 
 This is the official PyTorch implementation of the paper:
 
