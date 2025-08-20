@@ -15,6 +15,9 @@ We combined the traditional UNet model with the diffusion model to propose a two
 
 ![Network Architecture](images/1.png)
 
+---
+## Visualize the results
+
 ![Network Architecture](images/thin.jpg)![Network Architecture](images/moderate.jpg)![Network Architecture](images/thick.jpg)![Network Architecture](images/rain.jpg)![Network Architecture](images/blur.jpg)
 
 ---
