@@ -17,14 +17,7 @@ We combined the traditional UNet model with the diffusion model to propose a two
 
 ---
 ## 📊 Visualize the results
-
-| Thin haze | Moderate haze | Thick haze |
-|-----------|---------------|------------|
-| ![](images/thin.jpg) | ![](images/moderate.jpg) | ![](images/thick.jpg) |
-
-| Raindrop | Blur |
-|----------|------|
-| ![](images/rain.jpg) | ![](images/blur.jpg) |
+![](images/thin.jpg)  ![](images/moderate.jpg)  ![](images/thick.jpg) ![](images/rain.jpg) ![](images/blur.jpg) 
 
 ---
 
