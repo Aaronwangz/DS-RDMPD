@@ -42,7 +42,9 @@ While the code is being finalized, you can access the following components:
 
 - 🔹 **RSID dataset (used for training and evaluation)**  
   [📥 Download](https://drive.google.com/drive/folders/1abSw9GWyyOJINWCRNHBUoJBBw3FCttaS?usp=drive_link)
-
+  
+- 🔹 **DS-RDMPD model result diagram (including indicators)**  
+  [📥 Download](https://drive.google.com/drive/folders/1MLppQLh9fQA5h7ZPFpROMpRJhvlBQhv9?usp=sharing)
 ---
 ## 📖 Citation
 If you find our work helpful in your research, please consider citing it. We appreciate your support！😊
