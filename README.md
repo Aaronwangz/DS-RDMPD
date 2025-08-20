@@ -24,8 +24,7 @@ We combined the traditional UNet model with the diffusion model to propose a two
 We train and test the code on **PyTorch 1.13.0 + CUDA 11.7**. The detailed configuration is mentioned in the paper.
 
 ### Create a new conda environment
-<pre lang="markdown"> 
-conda create -n DSRDMPD python=3.8 
+<pre lang="markdown">conda create -n DSRDMPD python=3.8 
 conda activate DSRDMPD  </pre>
 
 ###  ⚠️ notice ⚠️
