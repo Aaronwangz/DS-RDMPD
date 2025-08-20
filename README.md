@@ -1,9 +1,15 @@
-# A Dual-Stage Residual Diffusion Model with Perceptual Decoding for Remote Sensing Image Dehazing
+# 【TGRS 2025】A Dual-Stage Residual Diffusion Model with Perceptual Decoding for Remote Sensing Image Dehazing
 
-abstract:Atmospheric pollutants, such as haze, severely affect the quality of remote sensing images, leading to blurred details and impairing their effectiveness in applications like environmental monitoring and agricultural resource management. In recent years, diffusion models have attracted widespread attention due to their powerful generative capabilities. However, striking a balance between their expensive training costs and actual recovery effectiveness has become a major challenge. To address this key challenge, we propose a perceptual decoding dual-stage residual diffusion model (DS-RDMPD) for remote sensing image dehazing. The core innovation of our work lies in a dual-stage coarse-to-fine architecture that integrates the traditional UNet with a diffusion model, enabling efficient adaptation of diffusion-based restoration to the dehazing task. This design not only achieves strong performance but also demonstrates remarkable generalization across various image restoration scenarios.
-In the first stage, we use Multi-channel Efficient Selective Synthesis UNet (MCESS-UNet) to pre-process the remote sensing haze images. This architecture performs initial dehazing and feature extraction through a multi-scale channel attention (MC) block, and then performs enhanced spatial feature aggregation through an Efficient Selective Synthesis (ESS) block. The preprocessed image is then used as the conditional input of the Residual Diffusion Model with Perceptual Decoding, where the perceptual decoder improves the generation quality by further decoupling the condition to refine the residual estimate.
-Extensive experiments on multiple datasets show that DS-RDMPD can achieve satisfactory results with only 300,000 iterations and about five sampling steps. It has achieved satisfactory results in both qualitative and quantitative experiments, and also performs well in rain removal and deblurring tasks, demonstrating the excellent generalization ability of the model.
+This is the official PyTorch implementation of the paper:
 
+> **ScaleViM-PDD: Multi-Scale EfficientViM with Physical Decoupling and Dual-Domain Fusion for Remote Sensing Image Dehazing**  
+> Hao Zhou, Yalun Wang, Qian Zhang, Tao Tao, and Wenqi Ren  
+> *IEEE Transactions on Geoscience and Remote Sensing*, 2025  
+> [MDPI Link](https://ieeexplore.ieee.org/document/11130517)
+
+We combined the traditional UNet model with the diffusion model to propose a two-stage network architecture, DS-RDMPD. This model achieved satisfactory results in remote sensing dehazing, real-world raindrop removal, and real-world denoising, demonstrating strong generalization capabilities. The paper can be found in the link above.
+
+---
 
 ## 🧠 Network Architecture 🧠
 
@@ -21,7 +27,7 @@ conda create -n DSRDMPD python=3.8
 conda activate DSRDMPD  </pre>
 
 ###  ⚠️ notice ⚠️
-This work is currently under second peer review in the TGRS journal. The current open source code is less readable, but it can be trained and tested. You only need to modify the path. Note: modify the key image size parameters. We are currently accelerating the compilation of a more readable version.
+Remember to modify the path to the dataset before running the test and training code. Different image resolutions require modifying the relevant parameter parameters.
 
 ## 📦 Available Resources 📦 
 
@@ -39,6 +45,23 @@ While the code is being finalized, you can access the following components:
 ## 🙏 Acknowledgment 🙏
 
 Our project is based on **[RDDM](https://github.com/nachifur/RDDM)**, and we are very grateful for this excellent work. Their contributions laid the foundation for our advancements in diffusion-based remote sensing image restoration.
+
+---
+## 📖 Citation
+If you find our work helpful in your research, please consider citing it. We appreciate your support！😊
+<pre lang="markdown"> 
+@ARTICLE{11130517,
+  author={Zhou, Hao and Wang, Yalun and Zhang, Qian and Tao, Tao and Ren, Wenqi},
+  journal={IEEE Transactions on Geoscience and Remote Sensing}, 
+  title={A Dual-Stage Residual Diffusion Model with Perceptual Decoding for Remote Sensing Image Dehazing}, 
+  year={2025},
+  volume={},
+  number={},
+  pages={1-1},
+  keywords={Remote Sensing Image Dehazing;Diffusion Model;Computer Vision;Multi-Scale Channel Attention},
+  doi={10.1109/TGRS.2025.3600540}
+  }
+  </pre>
 
 ---
 
