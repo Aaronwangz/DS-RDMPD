@@ -1,4 +1,4 @@
-# 【TGRS 2025】A Dual-Stage Residual Diffusion Model with Perceptual Decoding for Remote Sensing Image Dehazing
+# 🌫️【TGRS 2025】A Dual-Stage Residual Diffusion Model with Perceptual Decoding for Remote Sensing Image Dehazing
 
 This is the official PyTorch implementation of the paper:
 
@@ -16,9 +16,15 @@ We combined the traditional UNet model with the diffusion model to propose a two
 ![Network Architecture](images/1.png)
 
 ---
-## Visualize the results
+## 📊 Visualize the results
 
-![Network Architecture](images/thin.jpg)![Network Architecture](images/moderate.jpg)![Network Architecture](images/thick.jpg)![Network Architecture](images/rain.jpg)![Network Architecture](images/blur.jpg)
+| Thin haze | Moderate haze | Thick haze |
+|-----------|---------------|------------|
+| ![](images/thin.jpg) | ![](images/moderate.jpg) | ![](images/thick.jpg) |
+
+| Raindrop | Blur |
+|----------|------|
+| ![](images/rain.jpg) | ![](images/blur.jpg) |
 
 ---
 
@@ -30,7 +36,7 @@ We train and test the code on **PyTorch 1.13.0 + CUDA 11.7**. The detailed confi
 <pre lang="markdown">conda create -n DSRDMPD python=3.8 
 conda activate DSRDMPD  </pre>
 
-###  ⚠️ notice
+###  ⚠️ Notice
 Remember to modify the path to the dataset before running the test and training code. Different image resolutions require modifying the relevant parameter parameters.
 
 ## 📦 Available Resources
@@ -70,4 +76,7 @@ If you find our work helpful in your research, please consider citing it. We app
 Our project is based on **[RDDM](https://github.com/nachifur/RDDM)**, and we are very grateful for this excellent work. Their contributions laid the foundation for our advancements in diffusion-based remote sensing image restoration.
 
 ---
-If you have any questions, please feel free to contact us at aaron@ahut.edu.cn
+## 📫 Contact
+If you have any questions, please feel free to contact us:  
+✉️ aaron@ahut.edu.cn
+
