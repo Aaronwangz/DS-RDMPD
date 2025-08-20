@@ -17,7 +17,7 @@ We combined the traditional UNet model with the diffusion model to propose a two
 
 ---
 ## 📊 Visualize the results
-!(images/thin.jpg)  !(images/moderate.jpg)  !(images/thick.jpg) !(images/rain.jpg) !(images/blur.jpg) 
+![Visualize the results](images/thin.jpg)![Visualize the results](images/moderate.jpg)![Visualize the results](images/thick.jpg)![Visualize the results](images/rain.jpg)![Visualize the results](images/blur.jpg)
 
 ---
 
