@@ -59,7 +59,7 @@ If you find our work helpful in your research, please consider citing it. We app
   number={},
   pages={1-1},
   keywords={Remote Sensing Image Dehazing;Diffusion Model;Computer Vision;Multi-Scale Channel Attention},
-  doi={10.1109/TGRS.2025.3600540}
+  doi={https://doi.org/10.1109/TGRS.2025.3600540}
   }</pre>
 ---
 ## 🙏 Acknowledgment 
