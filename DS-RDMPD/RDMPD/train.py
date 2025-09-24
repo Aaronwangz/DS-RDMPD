@@ -99,7 +99,7 @@ class CustomTrainer(Trainer):
                 with torch.no_grad():
                     preprocessed_image = self.unet_stage1(hazy_image)
 
-                input_data = [gt_image, preprocessed_image]
+                input_data = [gt_image, preprocessed_image, hazy_image]
 
                 loss = self.model(input_data)
                 loss.backward()
