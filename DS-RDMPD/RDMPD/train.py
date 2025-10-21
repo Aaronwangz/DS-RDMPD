@@ -37,7 +37,7 @@ unet_stage1.eval()
 
 # 定义第二阶段的残差去噪扩散模型
 diffusion = ResidualDiffusion(
-    model=UnetRes(dim=64, dim_mults=(1, 2, 4, 8), condition=True, input_condition=False),
+    model=UnetRes(dim=64, dim_mults=(1, 2, 4, 8), condition=True, input_condition=True),
     image_size=256,
     timesteps=1000,
     sampling_timesteps=5,
@@ -45,7 +45,7 @@ diffusion = ResidualDiffusion(
     loss_type='l1',
     condition=True,
     sum_scale=1,
-    input_condition=False,
+    input_condition=True,
     input_condition_mask=False
 )
 
