@@ -204,7 +204,7 @@ class ASFusion(nn.Module):
 
 
 class MSM(nn.Module):
-    """多分支特征提取模块"""
+  
     def __init__(self, in_channels, filters):
         super(MSM, self).__init__()
         self.branch1 = nn.Sequential(
@@ -243,7 +243,7 @@ class Flatten(nn.Module):
 
 
 class CAM(nn.Module):
-    """通道注意力模块"""
+  
     def __init__(self, in_channels, reduction_ratio=4):
         super(CAM, self).__init__()
         self.module = nn.Sequential(
@@ -262,7 +262,6 @@ class CAM(nn.Module):
 
 
 class AttentionModule(nn.Module):
-    """组合注意力模块，结合多分支特征提取和通道注意力"""
     def __init__(self, in_channels, filters, reduction_ratio=4):
         super(AttentionModule, self).__init__()
         self.inc = MSM(in_channels=in_channels, filters=filters)
@@ -348,7 +347,7 @@ class U_Net(nn.Module):
         self.eff3 = ESS(in_dim=dim*2, is_bottom=False)
         self.eff4 = ESS(in_dim=dim, is_bottom=False)
 
-        # 用于调整通道数以匹配残差连接
+        
         self.adjust_channel4 = nn.Conv2d(dim*8, dim*16, kernel_size=1, stride=1, padding=0, bias=True)
         self.adjust_channel3 = nn.Conv2d(dim*4, dim*8, kernel_size=1, stride=1, padding=0, bias=True)
         self.adjust_channel2 = nn.Conv2d(dim*2, dim*4, kernel_size=1, stride=1, padding=0, bias=True)
@@ -398,7 +397,7 @@ class U_Net(nn.Module):
 if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    # 实例化和使用模型
+
     model = U_Net(dim=64).to(device)
     input_tensor = torch.randn(1, 3, 512, 512).to(device)
 
@@ -407,6 +406,5 @@ if __name__ == "__main__":
         output = model(input_tensor)
     print("Output size:", output.size())
 
-    # Average SSIM: 0.9322641082876836, Average PSNR: 22.723670734110293
-    # epochs:800 lr?
+
 
