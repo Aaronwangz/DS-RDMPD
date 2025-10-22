@@ -14,7 +14,7 @@ import lpips as lpips_pkg
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
-# 初始化设备
+
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 
@@ -104,3 +104,4 @@ if __name__ == "__main__":
     config_path = "dehazing.yml"
     data_root = "../data/RealBlur/RealBlur-J/test"
     test(config_path, data_root)
+
