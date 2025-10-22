@@ -17,7 +17,7 @@ from PIL import Image
 import csv
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
-# 定义权重初始化函数
+
 def weights_init_normal(m):
     classname = m.__class__.__name__
     if classname.find('ConvBlock') != -1:
@@ -34,7 +34,7 @@ def weights_init_normal(m):
         torch.nn.init.constant_(m.bias.data, 0.0)
 
 
-# 计算PSNR函数
+
 def custom_psnr(image1, image2):
     mse = F.mse_loss(image1, image2)
     max_pixel = 1.0
@@ -42,7 +42,6 @@ def custom_psnr(image1, image2):
     return psnr_value.item()
 
 
-# 计算批量PSNR
 def BatchPSNR(tar_img, prd_img):
     psnr = [custom_psnr(tar, prd) for tar, prd in zip(tar_img, prd_img)]
     return torch.tensor(psnr)
@@ -123,7 +122,6 @@ if cuda and torch.cuda.device_count() > 1:
 
 optimizer_G = torch.optim.Adam(generator.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
 
-# 添加Cosine Annealing学习率调度器
 scheduler_G = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer_G, T_max=200, eta_min=1e-6)
 
 mytransform = transforms.Compose([
@@ -238,3 +236,4 @@ for epoch in range(opt.epoch, opt.n_epochs):
         writer.writerow([epoch, mean_loss, val_mean_loss])
 
     scheduler_G.step()
+
