@@ -12,7 +12,7 @@ def default_loader(path1, path2, crop=False, resize=False, crop_size=512, resize
     w, h = img1.size
 
     if crop:
-        crop_width, crop_height = crop_size  # 分开处理 crop_size 的宽度和高度
+        crop_width, crop_height = crop_size  
         x = random.randint(0, w - crop_width)
         y = random.randint(0, h - crop_height)
         img1 = img1.crop((x, y, x + crop_width, y + crop_height))
