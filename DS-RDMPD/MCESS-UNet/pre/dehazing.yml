@@ -1,15 +1,15 @@
 # 模型相关配置
 model:
-  n_channels: 3  # 输入图像的通道数
-  n_classes: 3  # 输出图像的通道数
-  cutoff_ratio: 0.1  # 剪切比率
+  n_channels: 3 
+  n_classes: 3 
+  cutoff_ratio: 0.1  
   ch: 128
   out_ch: 3
   ch_mult: [1, 2, 2, 2]
   num_res_blocks: 2
   attn_resolutions: [16]
   dropout: 0.1
-  in_channels: 3  # 这里设置为 6
+  in_channels: 3 
   pred_channels: 12
   other_channels_begin: 0
   resamp_with_conv: True
@@ -23,41 +23,41 @@ model:
 optim:
   lr: 0.0004  # 学习率
   betas: [0.8, 0.999]  # Adam优化器的betas参数
-  save_path: '/opt/data/private/diffuse model/wylmodel/train_result/best_dehazing_hunet.pth'  # 模型权重保存路径
-  wavelet_params_path: '/opt/data/private/diffuse model/wylmodel/wavelet_weights_c2.pkl'  # 小波变换权重路径
+  save_path: '/opt/data/private/diffuse model/wylmodel/train_result/best_dehazing_hunet.pth'  
+  wavelet_params_path: '/opt/data/private/diffuse model/wylmodel/wavelet_weights_c2.pkl'  
 
 # 训练相关配置
 training:
-  n_epochs: 100  # 训练的总epochs数
-  epochs: 20  # 或者你希望的训练轮数
-  batch_size: 8  # 批量大小
-  validation_freq: 5  # 验证频率
-  use_mse: True  # 是否使用MSE损失
-  snapshot_freq: 10  # 快照频率
-  use_gt_in_train: False  # 是否在训练中使用GT
+  n_epochs: 100  
+  epochs: 20  
+  batch_size: 8  
+  validation_freq: 5  
+  use_mse: True 
+  snapshot_freq: 10  
+  use_gt_in_train: False  
   loss_type: 'MSELoss'
 
 # 数据相关配置
 data:
-  data_dir: '/opt/data/private/diffuse model/data/RSHaze'  # 数据集路径
-  train_dir: '/opt/data/private/diffuse model/data/RSHaze'  # 训练集路径
-  val_dir: '/opt/data/private/diffuse model/data/RSHaze'  # 验证集路径
-  image_size: 256  # 图像尺寸
-  num_workers: 4  # 数据加载的线程数
-  conditional: True  # 是否使用条件
-  use_window: False  # 是否使用窗口
-  window_size: 16  # 窗口尺寸
-  fourier_in_unet: True  # 是否在UNet中使用傅里叶变换
-  global_attn: False  # 是否使用全局注意力
-  device: 'cuda'  # 使用的设备
-  begin_from_noise: True  # 是否从噪声开始
+  data_dir: '/opt/data/private/diffuse model/data/RSHaze'  
+  train_dir: '/opt/data/private/diffuse model/data/RSHaze'  
+  val_dir: '/opt/data/private/diffuse model/data/RSHaze'  
+  image_size: 256 
+  num_workers: 4  
+  conditional: True  
+  use_window: False  
+  window_size: 16  
+  fourier_in_unet: True  
+  global_attn: False  
+  device: 'cuda'  
+  begin_from_noise: True 
   val_ratio: 0.1
 
-# 设备相关配置
-device: 'cuda'  # 使用的设备
+device: 'cuda'  
 
 diffusion:
-  schedule: 'linear'  # beta 计划
-  linear_start: 0.0001  # beta 起始值
-  linear_end: 0.02  # beta 结束值
-  n_timesteps: 800  # 扩散步骤数
+  schedule: 'linear'  
+  linear_start: 0.0001  
+  linear_end: 0.02  
+  n_timesteps: 800  
+
