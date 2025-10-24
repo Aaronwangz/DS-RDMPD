@@ -8,16 +8,17 @@ from functools import partial
 from multiprocessing import cpu_count
 from pathlib import Path
 
-
+import Augmentor
+import cv2
 import numpy as np
 import torch
 import torch.nn.functional as F
 import torchvision.transforms.functional as TF
-
+from accelerate import Accelerator
 from dataset import myImageFlodertrain, myImageFlodertest
 from einops import rearrange, reduce
 from einops.layers.torch import Rearrange
-
+from ema_pytorch import EMA
 from PIL import Image
 from torch import einsum, nn
 from torch.optim import Adam
@@ -33,7 +34,7 @@ ModelResPrediction = namedtuple(
 # helpers functions
 
 
-def set_seed(SEED):  # 每次运行相同的代码和数据时能够得到相同的结果。
+def set_seed(SEED):  
     # initialize random seed
     torch.manual_seed(SEED)
     torch.cuda.manual_seed_all(SEED)
@@ -42,32 +43,32 @@ def set_seed(SEED):  # 每次运行相同的代码和数据时能够得到相同
 
 
 def exists(x):
-    # 　检测ｘ是否为空
+  
     return x is not None
 
 
 def default(val, d):
-    # 函数用于提供一个默认值 d
+    
     if exists(val):
         return val
     return d() if callable(d) else d
 
 
-def identity(t, *args, **kwargs):  # 输入的参数原封不动地返回
+def identity(t, *args, **kwargs):  
     return t
 
 
-def cycle(dl):  # 接收一个数据加载器（dl）并无限次地循环遍历它
+def cycle(dl):  
     while True:
         for data in dl:
             yield data
 
 
-def has_int_squareroot(num):  # 整数平方根
+def has_int_squareroot(num):  
     return (math.sqrt(num) ** 2) == num
 
 
-def num_to_groups(num, divisor):  # 将 num 分成多个部分，每个部分的大小是 divisor，如果有剩余部分，则最后一部分的大小为剩余部分。
+def num_to_groups(num, divisor):  
     groups = num // divisor
     remainder = num % divisor
     arr = [divisor] * groups
@@ -80,7 +81,7 @@ def num_to_groups(num, divisor):  # 将 num 分成多个部分，每个部分的
 
 
 def normalize_to_neg_one_to_one(img):
-    # 　从 [0, 1] 范围映射到 [-1, 1] 范围
+   
     if isinstance(img, list):
         return [img[k] * 2 - 1 for k in range(len(img))]
     else:
@@ -97,7 +98,7 @@ def unnormalize_to_zero_to_one(img):
 # small helper modules
 
 
-class Residual(nn.Module):  # 构建具有跳跃连接的网络模块
+class Residual(nn.Module):  
     def __init__(self, fn):
         super().__init__()
         self.fn = fn
@@ -107,7 +108,7 @@ class Residual(nn.Module):  # 构建具有跳跃连接的网络模块
 
 
 def Upsample(dim, dim_out=None):
-    # 　上采样模块，用于上采样输入的特征图。
+    
     return nn.Sequential(
         nn.Upsample(scale_factor=2, mode='nearest'),
         nn.Conv2d(dim, default(dim_out, dim), 3, padding=1)
@@ -119,7 +120,7 @@ def Downsample(dim, dim_out=None):
 
 
 class WeightStandardizedConv2d(nn.Conv2d):
-    # 计算权重的均值和方差，对卷积层的权重进行标准化
+    
     """
     https://arxiv.org/abs/1903.10520
     weight standardization purportedly works synergistically with group normalization
@@ -137,7 +138,7 @@ class WeightStandardizedConv2d(nn.Conv2d):
         return F.conv2d(x, normalized_weight, self.bias, self.stride, self.padding, self.dilation, self.groups)
 
 
-class LayerNorm(nn.Module):  # 每个样本的特征维度上进行归一化
+class LayerNorm(nn.Module): 
     def __init__(self, dim):
         super().__init__()
         self.g = nn.Parameter(torch.ones(1, dim, 1, 1))
@@ -436,68 +437,23 @@ class Unet(nn.Module):
         return self.final_conv(x)
 
 
-class ConditionalFeatureFusionLayer(torch.nn.Module):
-    def __init__(self, nf=64, n_condition=64):
-        super(ConditionalFeatureFusionLayer, self).__init__()
-        self.nf = nf
-        self.n_condition = n_condition
-
-        # 保持特征提取网络
-        self.feature_conv = torch.nn.Sequential(
-            torch.nn.Conv2d(3, 64, kernel_size=3, padding=1),
-            torch.nn.LeakyReLU(0.1, True),
-            torch.nn.Conv2d(64, nf, kernel_size=3, padding=1)
-        )
-        self.condition_conv = torch.nn.Sequential(
-            torch.nn.Conv2d(3, 64, kernel_size=3, padding=1),
-            torch.nn.LeakyReLU(0.1, True),
-            torch.nn.Conv2d(64, n_condition, kernel_size=3, padding=1)
-        )
-
-        self.mul_conv1 = torch.nn.Conv2d(nf + n_condition, 128, kernel_size=3, padding=1)
-        self.mul_conv2 = torch.nn.Conv2d(128, nf, kernel_size=3, padding=1)
-        self.add_conv1 = torch.nn.Conv2d(nf + n_condition, 128, kernel_size=3, padding=1)
-        self.add_conv2 = torch.nn.Conv2d(128, nf, kernel_size=3, padding=1)
-        self.lrelu = torch.nn.LeakyReLU(0.1, True)
-
-    def forward(self, features, conditions, target_size=None):
-        # 特征提取
-        x = self.feature_conv(features)
-        cond = self.condition_conv(conditions)
-
-        # 如果提供了目标尺寸，调整到目标尺寸
-        if target_size is not None:
-            x = F.interpolate(x, size=target_size, mode='bilinear', align_corners=True)
-            cond = F.interpolate(cond, size=target_size, mode='bilinear', align_corners=True)
-        # 否则确保条件特征与输入特征尺寸匹配
-        elif x.shape[2:] != cond.shape[2:]:
-            cond = F.interpolate(cond, size=x.shape[2:], mode='bilinear', align_corners=True)
-
-        # 特征调制
-        cat_input = torch.cat((x, cond), dim=1)
-        mul = torch.sigmoid(self.mul_conv2(self.lrelu(self.mul_conv1(cat_input))))
-        add = self.add_conv2(self.lrelu(self.add_conv1(cat_input)))
-
-        return x * mul + add
-
-
 class UnetRes(nn.Module):
     def __init__(
-            self,
-            dim,
-            init_dim=None,
-            out_dim=None,
-            dim_mults=(1, 2, 4, 8),
-            channels=3,
-            self_condition=False,
-            resnet_block_groups=8,
-            learned_variance=False,
-            learned_sinusoidal_cond=False,
-            random_fourier_features=False,
-            learned_sinusoidal_dim=16,
-            share_encoder=1,
-            condition=False,
-            input_condition=False
+        self,
+        dim,
+        init_dim=None,
+        out_dim=None,
+        dim_mults=(1, 2, 4, 8),
+        channels=3,
+        self_condition=False,
+        resnet_block_groups=8,
+        learned_variance=False,
+        learned_sinusoidal_cond=False,
+        random_fourier_features=False,
+        learned_sinusoidal_dim=16,
+        share_encoder=1,
+        condition=False,
+        input_condition=False
     ):
         super().__init__()
         self.condition = condition
@@ -505,26 +461,26 @@ class UnetRes(nn.Module):
         self.share_encoder = share_encoder
         self.channels = channels
         default_out_dim = channels * (1 if not learned_variance else 2)
-        self.out_dim = out_dim if out_dim is not None else default_out_dim
+        self.out_dim = default(out_dim, default_out_dim)
         self.random_or_learned_sinusoidal_cond = learned_sinusoidal_cond or random_fourier_features
         self.self_condition = self_condition
-        # self.fcb = FCB(channel=channels)
 
-        # Determine dimensions
+        # determine dimensions
         if self.share_encoder == 1:
             input_channels = channels + channels * \
-                             (1 if self_condition else 0) + \
-                             channels * (1 if condition else 0) + channels * \
-                             (1 if input_condition else 0)
-            init_dim = init_dim if init_dim is not None else dim
+                (1 if self_condition else 0) + \
+                channels * (1 if condition else 0) + channels * \
+                (1 if input_condition else 0)
+            init_dim = default(init_dim, dim)
             self.init_conv = nn.Conv2d(input_channels, init_dim, 7, padding=3)
 
-            dims = [init_dim] + [dim * m for m in dim_mults]
+            dims = [init_dim, *map(lambda m: dim * m, dim_mults)]
             in_out = list(zip(dims[:-1], dims[1:]))
 
             block_klass = partial(ResnetBlock, groups=resnet_block_groups)
 
-            # Time embeddings
+            # time embeddings
+
             time_dim = dim * 4
 
             if self.random_or_learned_sinusoidal_cond:
@@ -542,7 +498,8 @@ class UnetRes(nn.Module):
                 nn.Linear(time_dim, time_dim)
             )
 
-            # Layers
+            # layers
+
             self.downs = nn.ModuleList([])
             self.ups = nn.ModuleList([])
             self.ups_no_skip = nn.ModuleList([])
@@ -565,25 +522,6 @@ class UnetRes(nn.Module):
             self.mid_attn = Residual(PreNorm(mid_dim, Attention(mid_dim)))
             self.mid_block2 = block_klass(
                 mid_dim, mid_dim, time_emb_dim=time_dim)
-
-            reversed_dim_mults = list(reversed(dim_mults))
-            dims_reversed = list(reversed(dims))
-
-            self.cff_layers = nn.ModuleList([
-                ConditionalFeatureFusionLayer(
-                    nf=dims_reversed[i],  # 当前层的特征通道数
-                    n_condition=dims_reversed[i]  # 条件的通道数应该匹配当前层
-                )
-                for i in range(len(reversed_dim_mults))
-            ])
-
-            self.cff_layers_no_skip = nn.ModuleList([
-                ConditionalFeatureFusionLayer(
-                    nf=dims_reversed[i],
-                    n_condition=dims_reversed[i]
-                )
-                for i in range(len(reversed_dim_mults))
-            ])
 
             for ind, (dim_in, dim_out) in enumerate(reversed(in_out)):
                 is_last = ind == (len(in_out) - 1)
@@ -656,85 +594,53 @@ class UnetRes(nn.Module):
                               input_condition=input_condition)
 
     def forward(self, x, time, x_self_cond=None):
-        if self.share_encoder == 1:  # 共享编码器
-            if self.self_condition:  # 自条件
-                x_self_cond = x_self_cond if x_self_cond is not None else torch.zeros_like(x)
+        if self.share_encoder == 1:
+            if self.self_condition:
+                x_self_cond = default(x_self_cond, lambda: torch.zeros_like(x))
                 x = torch.cat((x_self_cond, x), dim=1)
 
-            C = self.channels
-            x_input = x[:, C:2 * C, :, :]  # 提取 x_input
-            if self.input_condition:
-                x_input_condition = x[:, 2 * C:, :, :]  # 提取 x_input_condition
-            else:
-                x_input_condition = None
+            x = self.init_conv(x)
+            r = x.clone()
 
-            x = self.init_conv(x)  # 初始卷积
-            r = x.clone()  # 跳跃连接
-            # r = self.fcb(r)
-            t = self.time_mlp(time)  # 时间嵌入
+            t = self.time_mlp(time)
+
             h = []
 
-            # 下采样阶段
             for block1, block2, attn, downsample in self.downs:
                 x = block1(x, t)
                 h.append(x)
+
                 x = block2(x, t)
                 x = attn(x)
                 h.append(x)
+
                 x = downsample(x)
 
-            # 瓶颈层
             x = self.mid_block1(x, t)
             x = self.mid_attn(x)
             x = self.mid_block2(x, t)
 
             out_res = x
-
-            # 上采样阶段（不使用跳跃连接）
-            for idx, (block1, block2, attn, upsample) in enumerate(self.ups_no_skip):
+            for block1, block2, attn, upsample in self.ups_no_skip:
                 out_res = block1(out_res, t)
                 out_res = block2(out_res, t)
                 out_res = attn(out_res)
-
-                if self.input_condition and x_input_condition is not None:
-                    cff_no_skip = self.cff_layers_no_skip[idx]
-
-                    modulated = cff_no_skip(x_input, x_input_condition, target_size=out_res.shape[2:])
-                    out_res = out_res + modulated
-                else:
-                    cff_no_skip = self.cff_layers_no_skip[idx]
-                    modulated = cff_no_skip(x_input, x_input, target_size=out_res.shape[2:])
-                    out_res = out_res + modulated
 
                 out_res = upsample(out_res)
 
             out_res = self.final_res_block_1(out_res, t)
             out_res = self.final_conv_1(out_res)
 
-
-            for idx, (block1, block2, attn, upsample) in enumerate(self.ups):
-                # 从下采样阶段弹出对应的特征图
-                skip = h.pop()
-                x = torch.cat((x, skip), dim=1)
+            for block1, block2, attn, upsample in self.ups:
+                x = torch.cat((x, h.pop()), dim=1)
                 x = block1(x, t)
-
-
-                if self.input_condition and x_input_condition is not None:
-                    cff = self.cff_layers[idx]
-                    # 传入目标尺寸
-                    modulated = cff(x_input, x_input_condition, target_size=x.shape[2:])
-                    x = x + modulated
-                else:
-                    cff = self.cff_layers[idx]
-                    modulated = cff(x_input, x_input, target_size=x.shape[2:])
-                    x = x + modulated
 
                 x = torch.cat((x, h.pop()), dim=1)
                 x = block2(x, t)
                 x = attn(x)
+
                 x = upsample(x)
 
-            # 最终处理
             x = torch.cat((x, r), dim=1)
             x = self.final_res_block_2(x, t)
             out_res_add_noise = self.final_conv_2(x)
